@@ -6,8 +6,7 @@ require (
 	github.com/go-logr/logr v1.4.4
 	github.com/samber/lo v1.53.0
 	github.com/spf13/pflag v1.0.10
-	github.com/temporalio/kube-temporal v0.0.0-20261001142557-45d2d798a084
-	k8s.io/api v0.37.1
+	github.com/temporalio/kube-temporal v0.1.0
 	k8s.io/apimachinery v0.37.1
 	k8s.io/client-go v0.37.1
 	sigs.k8s.io/controller-runtime v0.25.2
@@ -86,6 +85,7 @@ require (
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
+	k8s.io/api v0.37.1 // indirect
 	k8s.io/apiextensions-apiserver v0.37.0 // indirect
 	k8s.io/apiserver v0.37.0 // indirect
 	k8s.io/component-base v0.37.0 // indirect
