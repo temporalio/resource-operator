@@ -16,7 +16,7 @@ BUILD_GIT_VERSION ?= $(GIT_VERSION)
 BUILD_GIT_COMMIT ?= $(GIT_COMMIT)
 BUILD_VERSION_PKG ?= $(VERSION_PKG)
 
-BUILD_CONTAINER_IMAGE ?= temporalio/cluster-operator
+BUILD_CONTAINER_IMAGE ?= temporalio/resource-operator
 
 ##@ Build binaries and container images
 
@@ -24,21 +24,21 @@ BUILD_CONTAINER_IMAGE ?= temporalio/cluster-operator
 build-all: build build-image ## Build all binaries and container images.
 
 .PHONY: build
-build: build-cluster-operator ## Build all binaries.
+build: build-resource-operator ## Build all binaries.
 
-.PHONY: build-cluster-operator
-build-cluster-operator: | $(BUILD_DIR) ## Build cluster-operator binary.
-	@echo -n "building cluster-operator binary ($(BUILD_GIT_VERSION)) ... "
+.PHONY: build-resource-operator
+build-resource-operator: | $(BUILD_DIR) ## Build resource-operator binary.
+	@echo -n "building resource-operator binary ($(BUILD_GIT_VERSION)) ... "
 	@go build -ldflags="-X $(BUILD_VERSION_PKG).GitVersion=$(BUILD_GIT_VERSION) -X $(BUILD_VERSION_PKG).GitCommit=$(BUILD_GIT_COMMIT) -X $(BUILD_VERSION_PKG).BuildDate=$(BUILD_DATE)" \
-		-a -o $(BUILD_DIR)/cluster-operator cmd/cluster-operator/main.go
+		-a -o $(BUILD_DIR)/resource-operator cmd/resource-operator/main.go
 	@echo "ok."
 
 .PHONY: build-image
-build-image: build-cluster-operator-image ## Build all container images.
+build-image: build-resource-operator-image ## Build all container images.
 
-.PHONY: build-cluster-operator-image
-build-cluster-operator-image: ## Build cluster-operator container image.
-	@echo -n "building cluster-operator container image ($(BUILD_GIT_VERSION)) ... "
+.PHONY: build-resource-operator-image
+build-resource-operator-image: ## Build resource-operator container image.
+	@echo -n "building resource-operator container image ($(BUILD_GIT_VERSION)) ... "
 	@$(CONTAINER_TOOL) build --quiet \
 	   -t "$(BUILD_CONTAINER_IMAGE):$(BUILD_GIT_VERSION)" \
 	   -f Dockerfile \

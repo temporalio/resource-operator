@@ -1,0 +1,32 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: temporal-resource-operator
+rules:
+- apiGroups:
+  - cloud.temporal.io
+  resources:
+  - namespaces
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cloud.temporal.io
+  resources:
+  - namespaces/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cloud.temporal.io
+  resources:
+  - namespaces/status
+  verbs:
+  - get
+  - patch
+  - update

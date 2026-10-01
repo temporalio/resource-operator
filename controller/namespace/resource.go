@@ -3,6 +3,8 @@ package namespace
 import (
 	"context"
 
+	"github.com/temporalio/kube-temporal/pkg/kube/transform"
+	"github.com/temporalio/kube-temporal/pkg/types"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -11,8 +13,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	cloudv1alpha1 "github.com/temporalio/kube-temporal/api/cloud/v1alpha1"
-	"github.com/temporalio/kube-temporal/pkg/kube/transform"
-	"github.com/temporalio/kube-temporal/pkg/types"
 )
 
 // resourceFromRequest returns a Resource representing the requested Kubernetes

@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-cluster-operator
+spec:
+  template:
+    spec:
+      containers:
+        - name: cluster-operator
+          args:
+            - --logging-level=debug
+            - --logging-development-enabled=true
