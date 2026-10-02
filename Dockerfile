@@ -1,8 +1,8 @@
 ARG BUILDER_IMAGE=golang
-ARG BUILDER_IMAGE_TAG=1.26.1
+ARG BUILDER_IMAGE_TAG=1.26.8
 ARG RUNTIME_IMAGE=scratch
 
-FROM $BUILDER_IMAGE:$BUILDER_IMAGE_TAG as builder
+FROM $BUILDER_IMAGE:$BUILDER_IMAGE_TAG AS builder
 
 ARG TARGET_ARCH=amd64
 ARG GIT_VERSION
@@ -21,7 +21,6 @@ WORKDIR /
 COPY LICENSE go.mod go.sum ./
 RUN go mod download
 
-COPY api api
 COPY cmd cmd
 COPY controller controller
 COPY pkg pkg
