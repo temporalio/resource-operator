@@ -1,0 +1,34 @@
+name: namespace-happy-default
+description: |
+  Functional test of happy path creation, use and deletion of a Temporal
+  Cloud Namespace with a default configuration.
+
+defaults:
+  kube:
+    namespace: $TEST_USER_NAMESPACE
+
+tests:
+ - name: ensure-namespace-does-not-exist
+   kube.get: namespaces.cloud.temporal.io/happy-default
+   require:
+     len: 0
+
+ - name: create-namespace
+   kube.create: |
+    apiVersion: cloud.temporal.io/v1alpha1
+    kind: Namespace
+    metadata:
+      name: happy-default
+
+ - name: check-namespace-spec
+   kube.get: namespaces.cloud.temporal.io/happy-default
+   require:
+     len: 1
+
+ - name: delete-namespace
+   kube.delete: namespaces.cloud.temporal.io/happy-default
+
+ - name: ensure-namespace-does-not-exist
+   kube.get: namespaces.cloud.temporal.io/happy-default
+   require:
+     len: 0

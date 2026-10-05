@@ -93,10 +93,10 @@ test-clean-build:
 test-clean: test-clean-build test-cluster-delete ## Clean up the test environment.
 
 .PHONY: test-e2e
-test-e2e: test-e2e-install ## Run end to end tests.
+test-e2e: test-e2e-install test-e2e-namespace ## Run all end to end tests.
 
 .PHONY: test-e2e-install
-test-install: $(GDT) ## Test that expected artifacts are all present in test cluster.
+test-e2e-install: $(GDT) ## Test that expected artifacts are all present in test cluster.
 	@$(GDT) $(TEST_GDT_ARGS) run test/install/check.yaml
 
 .PHONY: test-e2e-namespace

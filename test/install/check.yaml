@@ -1,0 +1,67 @@
+name: install-check
+description: |
+  Verify that all the CRDs and deployment artifacts for Temporal Resource
+  Operator are installed in a target Kubernetes cluster.
+
+defaults:
+  kube:
+    namespace: temporal-resource-operator
+
+tests:
+ - name: ensure-namespace-crd
+   kube.get: crds/namespaces.cloud.temporal.io
+   require:
+     len: 1
+
+ - name: ensure-serviceaccount
+   kube.get: serviceaccounts/temporal-resource-operator
+   require:
+     len: 1
+
+ - name: ensure-operator-clusterrole
+   kube.get: clusterroles/temporal-resource-operator
+   require:
+     len: 1
+
+ - name: ensure-operator-clusterrole-binding
+   kube.get: clusterrolebindings/temporal-resource-operator
+   require:
+     len: 1
+
+ - name: ensure-leader-election-role
+   kube.get: roles/leader-election
+   require:
+     len: 1
+
+ - name: ensure-leader-election-role-binding
+   kube.get: rolebindings/leader-election
+   require:
+     len: 1
+
+ - name: ensure-metrics-auth-clusterrole
+   kube.get: clusterroles/metrics-auth
+   require:
+     len: 1
+
+ - name: ensure-metrics-auth-clusterrole-binding
+   kube.get: clusterrolebindings/metrics-auth
+   require:
+     len: 1
+
+ - name: ensure-cluster-operator-deployment
+   kube.get: deployments/temporal-resource-operator
+   require:
+     matches:
+       spec:
+         replicas: 1
+         template:
+           metadata:
+             labels:
+               app.kubernetes.io/name: temporal-resource-operator
+       status:
+         readyReplicas: 1
+
+ - name: ensure-cluster-operator-metrics-service
+   kube.get: services/temporal-resource-operator-metrics
+   require:
+     len: 1

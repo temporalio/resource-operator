@@ -2,8 +2,7 @@
 # on service name and namespace that are out of this kustomize package.  It
 # should be run by config/default
 resources:
-- bases/cluster.temporal.io_clusters.yaml
-- bases/cluster.temporal.io_servertemplates.yaml
+- bases/cloud.temporal.io_namespaces.yaml
 # +kubebuilder:scaffold:crdkustomizeresource
 
 patches:
