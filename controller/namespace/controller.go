@@ -2,12 +2,13 @@ package namespace
 
 import (
 	"github.com/go-logr/logr"
-	cloudv1alpha1 "github.com/temporalio/kube-temporal/api/cloud/v1alpha1"
 	"github.com/temporalio/kube-temporal/pkg/controller/config"
 	"github.com/temporalio/kube-temporal/pkg/types"
 	ctrlrt "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
+
+	cloudv1alpha1 "github.com/temporalio/resource-operator/api/cloud/v1alpha1"
 )
 
 // +kubebuilder:rbac:groups=cloud.temporal.io,resources=namespaces,verbs=get;list;watch;create;update;patch;delete

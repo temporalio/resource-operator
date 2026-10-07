@@ -10,7 +10,7 @@ $(TEST_BUILD_DIR):
 	@mkdir -p "$(TEST_BUILD_DIR)"
 
 KIND ?= $(BIN_DIR)/kind
-KIND_VERSION ?= v0.31.0
+KIND_VERSION ?= v0.33.0
 $(KIND): | $(BIN_DIR)
 	@echo -n "installing kind@$(KIND_VERSION) ... "
 	@$(call go-install-tool,$(KIND),sigs.k8s.io/kind,$(KIND_VERSION))

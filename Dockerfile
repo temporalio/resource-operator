@@ -21,6 +21,7 @@ WORKDIR /
 COPY LICENSE go.mod go.sum ./
 RUN go mod download
 
+COPY api api
 COPY cmd cmd
 COPY controller controller
 COPY pkg pkg

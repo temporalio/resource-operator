@@ -12,8 +12,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	ctrlrtlog "sigs.k8s.io/controller-runtime/pkg/log"
 
-	cloudv1alpha1 "github.com/temporalio/kube-temporal/api/cloud/v1alpha1"
 	"github.com/temporalio/kube-temporal/pkg/controller/config"
+	cloudv1alpha1 "github.com/temporalio/resource-operator/api/cloud/v1alpha1"
 	ctrlnamespace "github.com/temporalio/resource-operator/controller/namespace"
 	"github.com/temporalio/resource-operator/pkg/version"
 )
