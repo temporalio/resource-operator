@@ -48,7 +48,7 @@ tests:
    require:
      len: 1
 
- - name: ensure-cluster-operator-deployment
+ - name: ensure-resource-operator-deployment
    kube.get: deployments/temporal-resource-operator
    require:
      matches:

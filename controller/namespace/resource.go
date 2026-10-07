@@ -12,7 +12,7 @@ import (
 	ctrlrt "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	cloudv1alpha1 "github.com/temporalio/kube-temporal/api/cloud/v1alpha1"
+	cloudv1alpha1 "github.com/temporalio/resource-operator/api/cloud/v1alpha1"
 )
 
 // resourceFromRequest returns a Resource representing the requested Kubernetes
