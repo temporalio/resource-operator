@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
+	"github.com/go-logr/logr"
 	"github.com/spf13/pflag"
 	"k8s.io/apimachinery/pkg/runtime"
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -36,6 +38,7 @@ func main() {
 	cfg := config.New(config.WithFlags(&flagset))
 	pflag.Parse()
 
+	cfg.SetDefaults()
 	cfg.SetupLogging()
 
 	setupLog.Info(
@@ -46,28 +49,33 @@ func main() {
 	)
 
 	setupLog.Info("initializing controller manager")
-	mgr, err := ctrlrt.NewManager(ctrlrt.GetConfigOrDie(), ctrlrt.Options{
-		Scheme: scheme,
-		Cache: ctrlrtcache.Options{
+	mgr, err := ctrlrt.NewManager(
+		ctrlrt.GetConfigOrDie(),
+		ctrlrt.Options{
 			Scheme: scheme,
+			Cache: ctrlrtcache.Options{
+				Scheme: scheme,
+			},
+			HealthProbeBindAddress: cfg.Healthz.BindAddress,
+			LeaderElection:         cfg.LeaderElection.Enabled,
+			LeaderElectionID:       binaryName,
+			Metrics:                cfg.Metrics.ToMetricsServerOptions(),
 		},
-		HealthProbeBindAddress: cfg.Healthz.BindAddress,
-		LeaderElection:         cfg.LeaderElection.Enabled,
-		LeaderElectionID:       binaryName,
-		Metrics:                cfg.Metrics.ToMetricsServerOptions(),
-	})
+	)
 	if err != nil {
 		setupLog.Error(err, "failed creating controller manager")
 		os.Exit(1)
 	}
 
-	setupLog.Info("initializing namespace controller")
-	cc := ctrlnamespace.New(cfg, ctrlnamespace.WithLogger(ctrlrtlog.Log))
+	rootLogger := slog.New(logr.ToSlogHandler(ctrlrtlog.Log))
+
+	setupLog.Info("initializing controller")
+	cc := ctrlnamespace.New(cfg, rootLogger)
 
 	if err = cc.BindManager(mgr); err != nil {
 		setupLog.Error(
 			err,
-			"failed binding namespace controller to controller manager",
+			"failed binding controller to controller manager",
 		)
 		os.Exit(1)
 	}

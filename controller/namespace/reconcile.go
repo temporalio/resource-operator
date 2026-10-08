@@ -43,7 +43,7 @@ func (c *controller) Reconcile(
 		return ctrlrt.Result{}, err
 	}
 
-	ctx = ctrlreqlog.ToContext(ctx, c.log, desired)
+	ctx = ctrlreqlog.ToContext(ctx, c.Logger(), desired)
 
 	latest, err := c.reconcile(ctx, desired)
 	return c.handleReconcileError(ctx, desired, latest, err)
@@ -206,5 +206,5 @@ func (c *controller) patchResourceStatus(
 	lobj := latest.DeepCopy().ClientObject()
 	patch := client.MergeFrom(dobj)
 
-	return c.kc.Status().Patch(ctx, lobj, patch)
+	return c.Client.Status().Patch(ctx, lobj, patch)
 }
