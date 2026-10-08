@@ -52,7 +52,7 @@ spec:
       - command:
         - /bin/resource-operator
         args:
-        - --logging-development-enabled=false
+        - --logging-format=json
         - --logging-level=info
         - --leader-election-enabled=false
         image: temporalio/resource-operator:latest
